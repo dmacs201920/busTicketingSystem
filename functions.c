@@ -54,16 +54,30 @@
 
 void aLogin(FILE *fb)
 {
-    char user_name[20];
-    char password[20];
-    int cnt=4;
+   int l1,l2;
+   char user_name[20];
+   char password[20];
+   int cnt=4;
 
-LOGIN1: printf("\nEnter Admin name:");
+
+    while(1)
+    {
+	printf("\nEnter Admin name:");
 	getchar();
 	fgets(user_name,20,stdin);
 
+	l1=strlen(user_name);
+	if(user_name[l1-1]=='\n')
+		user_name[l1-1]='\0';
+
 	printf("\nEnter Password:");
 	fgets(password,20,stdin);
+
+	l2=strlen(password);
+	if(password[l2-1]=='\n')
+		password[l2-1]='\0';
+
+
 
 	if(strcmp(user_name,"Swami999")==0)
 	{
@@ -79,14 +93,16 @@ LOGIN1: printf("\nEnter Admin name:");
 	{
 	    printf("LOGIN Unsuccessful!!\n\n");
 	    cnt--;
+
 	    if(cnt==0)
 	    {
 		printf("PROGRAM EXITING!!\n\n");
 		exit(0);
 	    }
 	    printf("Number of chances left for login :%d \n\n",cnt);
-	    goto LOGIN1;
 	}
+    }
+	   
 }
 
 //****************************************************************************************************************************************************************    
@@ -96,14 +112,28 @@ LOGIN1: printf("\nEnter Admin name:");
 
 void pLogin(FILE *fb)
 {
+    int l1,l2;
     char user_name[20];
     char password[20];
     int cnt=4;
 
-LOGIN2: printf("Enter Username:");
+    while(1)  
+    {
+        printf("Enter Username:");
+	getchar();
 	fgets(user_name,20,stdin);
+
+
+	l1=strlen(user_name);
+	if(user_name[l1-1]=='\n')
+		user_name[l1-1]='\0';
+
 	printf("Enter Password:");
 	fgets(password,10,stdin);
+
+	l2=strlen(password);
+	if(password[l2-1]=='\n')
+		password[l2-1]='\0';
 
 	if(strcmp(user_name,"dharshan123")==0)
 	{
@@ -123,18 +153,22 @@ LOGIN2: printf("Enter Username:");
 		return;
 	    }
 	}
+
 	else
 	{
 	    printf("LOGIN Unsuccessful!!\n");
 	    cnt--;
+
 	    if(cnt==0)
 	    {
 		printf("PROGRAM EXITING!!\n");
 		exit(0);
 	    }
 	    printf("Number of chances left for login :%d \n",cnt);
-	    goto LOGIN2;
-	}
+    	}
+    }
+	  
+	
 }
 
 //****************************************************************************************************************************************************************    
@@ -592,12 +626,19 @@ arrival:
 		goto arrival;
 	    }
 
-	    if(b.depart.Hr<b.arrival.Hr)
+	    if((b.depart.Hr<b.arrival.Hr)||((b.depart.Hr==b.arrival.Hr)&&(b.depart.Min<b.arrival.Min)))
 	    {
 		printf("Departure time cannot be less than Arrival time\n");
 		goto depart;
 	    }
 	    getchar();
+
+	    if((b.depart.Hr==b.arrival.Hr)&&(b.depart.Min==b.arrival.Min))
+	    {
+		printf("INVALID LOGIC..\n");
+		goto depart;
+	    }
+             
 fare:
 	    printf("Enter the price of a ticket:");
 	    scanf("%f",&b.fare);
