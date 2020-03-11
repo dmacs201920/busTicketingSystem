@@ -582,6 +582,7 @@ bname:
 		    b.s[i][j].p1.busn=-1;
 		    b.s[i][j].p1.bty='#';
 		    b.s[i][j].p1.seat_no=-1;
+ 		    b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
 		}
 	    } 
 
@@ -862,6 +863,7 @@ bnum:	printf("Enter the bus no.");
 		    b.s[i][j].p1.busn=-1;
 		    b.s[i][j].p1.bty='#';
 		    b.s[i][j].p1.seat_no=-1;
+		    b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
 
 		}
 	    } 
@@ -975,6 +977,7 @@ fare:
        int search_place(FILE *fb,char *sou,char *des)
        {
 	   unsigned flag=0;
+
 	   rewind(fb);
 	   bus b;
 
@@ -1038,7 +1041,7 @@ fare:
 	   int flag=0;
 
 
-	   if(strcmp(b.s[ro][co].p1.name,"")==0)
+	   if(b.s[ro][co].p1.busn==-1)
 	   {
 	       flag=1;
 
@@ -1072,7 +1075,7 @@ fare:
 
        void ticket_reservation(FILE *fb)
        {
-	   int fl1,fl2,marker,busno,row,col,n,flag,q;
+	   int fl1,fl2,marker,busno,row,col,n,flag,q,ra;
 	   float price;
 
 	   char sou[20],des[20];
@@ -1123,8 +1126,9 @@ date:
 	   }	
 
 dest:
-	   getchar();
-	   printf("Enter the place of destination\n");
+	  // getchar();
+	   printf("Enter the place of destination");
+ 	   getchar();
 	   fgets(sou,20,stdin);
 	   printf("\n");
 
@@ -1247,7 +1251,7 @@ column:		 printf("Enter the column number:");
 		 do
 
 		 {
-		     srand(i);
+		     srand((int)&ra);
 
 		     b.s[row][col].p1.pid=rand();
 
@@ -1255,6 +1259,7 @@ column:		 printf("Enter the column number:");
 		     printf("\n");
 
 		     printf("Enter the name of the passenger:");
+		     getchar();
 		     fgets(b.s[row][col].p1.name,50,stdin);
 		     printf("\n");
 
@@ -1360,6 +1365,11 @@ column:		 printf("Enter the column number:");
 		 }while(i<=n);
 
 
+	   bill(price,n);
+
+	   printf("Your booking has been confirmed!!\n");
+	   printf("Thanks for choosing our services\n");
+	   printf("Have a GOOD & SAFE JOURNEY!!\n");
 
 		   }
 		   }
@@ -1368,11 +1378,6 @@ column:		 printf("Enter the column number:");
 	       }
 	   
 
-	   bill(price,n);
-
-	   printf("Your booking has been confirmed!!\n");
-	   printf("Thanks for choosing our services\n");
-	   printf("Have a GOOD & SAFE JOURNEY!!\n");
 
 	   exit(0);
 
