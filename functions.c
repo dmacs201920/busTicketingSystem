@@ -62,14 +62,14 @@ void aLogin(FILE *fb)
 
     while(1)
     {
-	printf("\nEnter Admin name:");
 	getchar();
+	printf("Enter Admin name:");
 	fgets(user_name,20,stdin);
 
 	l1=strlen(user_name);
 	if(user_name[l1-1]=='\n')
 		user_name[l1-1]='\0';
-
+	
 	printf("\nEnter Password:");
 	fgets(password,20,stdin);
 
@@ -77,7 +77,7 @@ void aLogin(FILE *fb)
 	if(password[l2-1]=='\n')
 		password[l2-1]='\0';
 
-
+puts(user_name);
 
 	if(strcmp(user_name,"Swami999")==0)
 	{
@@ -119,17 +119,16 @@ void pLogin(FILE *fb)
 
     while(1)  
     {
-        printf("Enter Username:");
 	getchar();
+	printf("Enter Passenger name:");
 	fgets(user_name,20,stdin);
-
 
 	l1=strlen(user_name);
 	if(user_name[l1-1]=='\n')
 		user_name[l1-1]='\0';
-
-	printf("Enter Password:");
-	fgets(password,10,stdin);
+	
+	printf("\nEnter Password:");
+	fgets(password,20,stdin);
 
 	l2=strlen(password);
 	if(password[l2-1]=='\n')
@@ -140,6 +139,7 @@ void pLogin(FILE *fb)
 	    if(strcmp(password,"123dharshan")==0)
 	    {
 		printf("Login Succesful!! \n");
+		pmenu(fb);
 		return;
 	    }
 	}
@@ -150,6 +150,7 @@ void pLogin(FILE *fb)
 	    if(strcmp(password,"333ashvanth")==0)
 	    {
 		printf("Login Successful!! \n");
+		pmenu(fb);
 		return;
 	    }
 	}
@@ -1098,9 +1099,9 @@ date:
 	   printf("\n Enter the year :");
 	   scanf("%d",&(d.yyyy));
 
-	   q=leap(&(b.d));
+	   q=leap(&d);
 
-	   if(((d.mm)>1)&&((d.mm)<=3)&&(((d.dd)>0)&&((d.dd)<=31))&&((d.yyyy)>2020)) 
+	   if(((d.mm)>1)&&((d.mm)<=3)&&(((d.dd)>0)&&((d.dd)<=31))&&((d.yyyy)>=2020)) 
 	   {
 	       if((d.mm==2)&&((d.dd==31)||(d.dd==30)))
 	       {
@@ -1109,7 +1110,7 @@ date:
 	       }	
 	   }
 
-	   if(((d.mm)>1)&&((d.mm)<=3)&&(((d.dd)>0)&&((d.dd)<=31))&&((d.yyyy)>2020))
+	   if(((d.mm)>1)&&((d.mm)<=3)&&(((d.dd)>0)&&((d.dd)<=31))&&((d.yyyy)>=2020))
 	   {
 	       goto dest;
 	   }
@@ -1122,6 +1123,7 @@ date:
 	   }	
 
 dest:
+	   getchar();
 	   printf("Enter the place of destination\n");
 	   fgets(sou,20,stdin);
 	   printf("\n");
