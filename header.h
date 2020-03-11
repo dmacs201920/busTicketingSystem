@@ -24,7 +24,7 @@ typedef struct passenger     //structure for passenger
     int seat_no;
     char bty;
     time arr,dep;
-
+    int row,col;
 
 }pass;
 

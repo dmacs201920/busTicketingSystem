@@ -583,6 +583,8 @@ bname:
 		    b.s[i][j].p1.bty='#';
 		    b.s[i][j].p1.seat_no=-1;
  		    b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
+		    b.s[i][j].p1.row=i;
+		    b.s[i][j].p1.col=j;
 		}
 	    } 
 
@@ -864,6 +866,8 @@ bnum:	printf("Enter the bus no.");
 		    b.s[i][j].p1.bty='#';
 		    b.s[i][j].p1.seat_no=-1;
 		    b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
+		    b.s[i][j].p1.row=i;
+		    b.s[i][j].p1.col=j;
 
 		}
 	    } 
@@ -1127,13 +1131,13 @@ date:
 
 dest:
 	  // getchar();
-	   printf("Enter the place of destination");
+	   printf("Enter the place of destination:");
  	   getchar();
-	   fgets(sou,20,stdin);
+	   fgets(des,20,stdin);
 	   printf("\n");
 
 	   printf("Enter the Source:");
-	   fgets(des,20,stdin);
+	   fgets(sou,20,stdin);
 	   getchar();
 	   printf("\n");
 
@@ -1251,7 +1255,7 @@ column:		 printf("Enter the column number:");
 		 do
 
 		 {
-		     srand((int)&ra);
+		    // srand((int)&ra);
 
 		     b.s[row][col].p1.pid=rand();
 
@@ -1276,14 +1280,18 @@ column:		 printf("Enter the column number:");
 		     strcpy(b.s[row][col].p1.source,b.from);
 		     strcpy(b.s[row][col].p1.dest,b.to);
 
-		     b.s[row][col].p1.da.dd=b.d.dd;
-		     b.s[row][col].p1.da.mm=b.d.mm;
-		     b.s[row][col].p1.da.yyyy=b.d.yyyy;
+		     (b.s[row][col].p1.da.dd)=(b.d.dd);
+		     (b.s[row][col].p1.da.mm)=(b.d.mm);
+		     (b.s[row][col].p1.da.yyyy)=(b.d.yyyy);
 
-		     b.s[row][col].p1.busn=b.bnum;
-		     b.s[row][col].p1.bty=b.btype;
-		     b.s[row][col].p1.arr=b.arrival;
-		     b.s[row][col].p1.dep=b.depart;
+		     (b.s[row][col].p1.busn)=(b.bnum);
+		     (b.s[row][col].p1.bty)=(b.btype);
+		     (b.s[row][col].p1.arr.Hr)=(b.arrival.Hr);
+		     (b.s[row][col].p1.arr.Min)=(b.arrival.Min);
+		     (b.s[row][col].p1.dep.Hr)=(b.depart.Hr);
+ 		     (b.s[row][col].p1.dep.Min)=(b.depart.Min);
+		     (b.s[row][col].p1.row)=row;
+		     (b.s[row][col].p1.col)=col;
 
 		     switch(row)
 		     {
@@ -1332,6 +1340,11 @@ column:		 printf("Enter the column number:");
 		     }
 		     fwrite(&b.s[row][col].p1,sizeof(pass),1,fb);
 
+                  
+		     int le1;
+		     le1=strlen(b.s[row][col].p1.name);
+
+		     (b.s[row][col].p1.pid)=(b.s[row][col].p1.pid)+(b.s[row][col].p1.age)+(b.s[row][col].p1.busn*10000)+le1+(row*100)+col;
 
 		     FILE *pas;
 
