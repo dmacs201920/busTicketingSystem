@@ -583,8 +583,8 @@ bname:
 		    b.s[i][j].p1.bty='#';
 		    b.s[i][j].p1.seat_no=-1;
  		    b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
-		    b.s[i][j].p1.row=i;
-		    b.s[i][j].p1.col=j;
+		   // b.s[i][j].p1.row=i;
+		   // b.s[i][j].p1.col=j;
 		}
 	    } 
 
@@ -866,8 +866,8 @@ bnum:	printf("Enter the bus no.");
 		    b.s[i][j].p1.bty='#';
 		    b.s[i][j].p1.seat_no=-1;
 		    b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
-		    b.s[i][j].p1.row=i;
-		    b.s[i][j].p1.col=j;
+		   //b.s[i][j].p1.row=i;
+		   //b.s[i][j].p1.col=j;
 
 		}
 	    } 
@@ -1042,16 +1042,7 @@ fare:
 
        int check_seat_free(bus b,int ro,int co)
        {
-	   int flag=0;
-
-
-	   if(b.s[ro][co].p1.busn==-1)
-	   {
-	       flag=1;
-
-	   }
-
-	   return flag;
+	   return b.s[ro][co].p1.busn==-1;
        }
 
 
@@ -1211,27 +1202,43 @@ dest:
 
 	       rewind(fb);
 
-	       while(fread(&b,sizeof(bus),1,fb))
+	       while(fread(&b,sizeof(bus),1,fb)==1)
 	       {
 		   if(b.bnum==busno)
 		   {
-row:		 printf("Enter the row number:");
-		 scanf("%d",&row);
 
-		 if(row>12 && row<0)
+
+			 printf("Enter the number of tickets to be booked:");
+		         scanf("%d",&n);
+
+		 	 price=b.fare;
+
+		 // for(int i=1;i<=n;i++)
+
+		 //{
+		 //if(i==1)       
+		       int i=1;
+		 do
+
 		 {
+		    // srand((int)&ra);
+row:		  printf("Enter the row number:");
+		  scanf("%d",&row);
+
+		  if(row>12 || row<0)
+		  {
 		     printf("invalid\n");
 		     goto row;
-		 }
+		  }
 
-column:		 printf("Enter the column number:");
-		 scanf("%d",&col);
+column:		  printf("Enter the column number:");
+		  scanf("%d",&col);
 
-		 if(col>3 && col<0)
-		 {
+		  if(col>3 || col<0)
+		  {
 		     printf("invalid\n");
 		     goto column;
-		 }
+		  }
 
 		 flag=check_seat_free(b,row,col);
 
@@ -1242,25 +1249,9 @@ column:		 printf("Enter the column number:");
 		     goto row;
 		 }
 
-		 printf("Enter the number of tickets to be booked:");
-		 scanf("%d",&n);
-
-		 price=b.fare;
-
-		 // for(int i=1;i<=n;i++)
-
-		 //{
-		 //if(i==1)       
-		 int i=1;
-		 do
-
-		 {
-		    // srand((int)&ra);
-
 		     b.s[row][col].p1.pid=rand();
 
-		     printf("Your passenger ID is :%lu",b.s[row][col].p1.pid);
-		     printf("\n");
+		   
 
 		     printf("Enter the name of the passenger:");
 		     getchar();
@@ -1290,8 +1281,8 @@ column:		 printf("Enter the column number:");
 		     (b.s[row][col].p1.arr.Min)=(b.arrival.Min);
 		     (b.s[row][col].p1.dep.Hr)=(b.depart.Hr);
  		     (b.s[row][col].p1.dep.Min)=(b.depart.Min);
-		     (b.s[row][col].p1.row)=row;
-		     (b.s[row][col].p1.col)=col;
+		    
+		    
 
 		     switch(row)
 		     {
@@ -1338,13 +1329,17 @@ column:		 printf("Enter the column number:");
 			     b.s[row][col].p1.seat_no=row+col+37;
 			     break;
 		     }
-		     fwrite(&b.s[row][col].p1,sizeof(pass),1,fb);
+		     fseek(fb,-sizeof(bus),1);
+		     fwrite(&b,sizeof(bus),1,fb);
 
                   
 		     int le1;
 		     le1=strlen(b.s[row][col].p1.name);
 
 		     (b.s[row][col].p1.pid)=(b.s[row][col].p1.pid)+(b.s[row][col].p1.age)+(b.s[row][col].p1.busn*10000)+le1+(row*100)+col;
+
+		     printf("Your passenger ID is :%lu",b.s[row][col].p1.pid);
+		     printf("\n");
 
 		     FILE *pas;
 
