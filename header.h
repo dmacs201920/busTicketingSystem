@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include<string.h>
 
+int tot_bus;  // Total no. of Buses in File
+
 typedef struct     //structure for time
 {
     int Hr,Min;
@@ -24,6 +26,7 @@ typedef struct passenger     //structure for passenger
     int seat_no;
     char bty;
     time arr,dep;
+    char book_status;
   //  int row,col;
 
 }pass;
@@ -77,6 +80,7 @@ int search_place(FILE *,char *,char *);
 int check_seat_free(bus,int,int);
 void bill(float,int);
 void display_passenger_list(FILE *);
+void print_bus_seats(FILE *);
 void print_ticket();
 
 
