@@ -27,6 +27,7 @@ typedef struct passenger     //structure for passenger
     char bty;
     time arr,dep;
     char book_status;
+    float amount;
   //  int row,col;
 
 }pass;
@@ -70,6 +71,7 @@ void newbus(FILE *);
 void delete_bus(FILE *);
 void modify_bus(FILE *);
 void update_bus(FILE *,int ,int ,int ,seat **);
+void display_passenger_list(FILE *);
 void display_bus_list(FILE *);
 
 // PASSENGER FUNCTION PROTOTYPES
@@ -79,9 +81,9 @@ int search_date(FILE *,date);
 int search_place(FILE *,char *,char *);
 int check_seat_free(bus,int,int);
 void bill(float,int);
-void display_passenger_list(FILE *);
 void print_bus_seats(FILE *);
-void print_ticket();
+void print_ticket(FILE *);
+void bus_seating_arrangement(FILE *);
 
 
 

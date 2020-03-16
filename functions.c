@@ -5,6 +5,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
 //****************************************************************************************************************************************************************    
 
@@ -192,6 +193,7 @@ void printline()
 
 void COVER()
 {
+    system(" clear ");
     printf(" ________________________________________________________________________________________\n");
     printf("|                           Om     Sri    Sai     Ram                                    |\n");
     printf("|                                                                                        |\n");
@@ -221,6 +223,7 @@ void COVER()
 
 void menu(FILE *fb)
 {
+    
     int i,n,j;
     printf("\n");
 lmenu:
@@ -264,6 +267,8 @@ lmenu:
 
 void admenu(FILE *fb)
 {
+    system(" clear ");
+
     int i,j,n;
     printf("\n\n");
 
@@ -307,6 +312,7 @@ admenu:
 
 	case 4:
 	    display_bus_list(fb);
+	    break;
 
 	case 5: 
 	    display_passenger_list(fb);
@@ -324,11 +330,13 @@ yesno: printf("Do you want to continue??\n");
 	   goto yesno;
 
        else if(j==1)
+       {  
+	   system(" clear ");
 	   goto admenu;
-
+       }
        else
        {
-	   printf("\n\nSIGNING OUT AS ADMIN!!\n");
+	   printf("\n\nSIGNING OUT !!\n");
 	   menu(fb);
        }
 
@@ -342,45 +350,53 @@ yesno: printf("Do you want to continue??\n");
 
 void pmenu(FILE *fb)
 {
+    system(" clear ");
+
     int i,j,n;
     printf("\n\n");
 
-admenu:
+passmenu:
     printf("    PASSENGER MENU   :\n");
     printf("--------------------\n\n");
     printf("1.TICKET BOOKING\n");
-    // printf("2.TICKET CANCELLATION\n");
+    printf("2.TICKET CANCELLATION\n");
     printf("3.BUS DETAILS\n");
-    printf("4.PRINT TICKET\n");
-    printf("Choose your option[1/2/3]:");
+    printf("4.BUS SEATS\n");
+    printf("5.PRINT TICKET\n");
+    printf("Choose your option[1/2/3/4/5]:");
     scanf("%d",&i);
 
-    if(i>4 || i<1)
+    if(i>5 || i<1)
     {
 	printf("wrong option!!\n");
-	goto admenu;
+	goto passmenu;
     }
 
     switch(i)
     {
 	case 1: 
-	    ticket_reservation(fb);
+	    	ticket_reservation(fb);
 
-	    break;
+	    	break;
 
 
-	    /* case 2: 
-	       ticket_cancellation(fb);
-	       break;*/
+        case 2: 
+	       	ticket_cancellation(fb);
+	      	 break;
 
 	case 3: 
-	    display_bus_list(fb);
+	    	display_bus_list(fb);
 
-	    break;
+	    	break;
 
 	case 4:
-	    print_ticket();
-	    break;
+		bus_seating_arrangement(fb);
+		break;
+		
+
+	case 5:
+	    	print_ticket(fb);
+	    	break;
 
 
 	default:
@@ -396,11 +412,14 @@ yesno: printf("Do you want to continue??\n");
 	   goto yesno;
 
        else if(j==1)
-	   goto admenu;
+       {
+	   system(" clear ");
+	   goto passmenu;
+       }
 
        else
        {
-	   printf("\n\nSIGNING OUT !!\n");
+	   printf("\n\nSIGNING OUT  !!\n");
 	   menu(fb);
        }
 
@@ -488,6 +507,7 @@ int search(FILE *fb,int bno)
 
 void newbus(FILE *fb)   
 {
+    system(" clear ");
     bus b;
     int flag,i,j,k,l,q;
 
@@ -553,6 +573,8 @@ btype:	    printf("A -- A/C SLEEPER\n");
 	    printf("D -- A/C SITTING\n");
 	    printf("Enter bus type:");
 	    scanf("%c",&b.btype);
+	    if(b.btype==islower(b.btype));
+		b.btype=toupper(b.btype);
 	    getchar();
 	    printf("\n");
 
@@ -566,6 +588,8 @@ btype:	    printf("A -- A/C SLEEPER\n");
 bname:
 	    printf("ENTER bus name :");
 	    fgets(b.bname,30,stdin);
+	    b.bname=tolower(b.bname);
+		b.bname[0]=toupper(b.bname[0]);
 	    // getchar();
 	    printf("\n");
 
@@ -640,6 +664,7 @@ bname:
 
 		    b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
 		    b.s[i][j].p1.book_status='#';
+ 		    b.s[i][j].p1.amount=-1;
 		    // b.s[i][j].p1.row=i;
 		    // b.s[i][j].p1.col=j;
 		}
@@ -649,12 +674,16 @@ bname:
 destination:
 	    printf("Enter the Destination:");
 	    fgets(b.to,20,stdin);
+	    b.to=tolower(b.to);
+		b.to[0]=toupper(b.to[0]);
 	    //getchar();
 	    printf("\n");
 
 
 	    printf("Enter the Source:");
 	    fgets(b.from,20,stdin);
+	     b.from=tolower(b.from);
+		b.from[0]=toupper(b.from[0]);
 	    //getchar();
 	    printf("\n");
 
@@ -729,8 +758,11 @@ fare:
 
 void display_bus_list(FILE *fb)
 {   
+    system(" clear ");
+
     rewind(fb);
     bus b1;
+
     fread(&b1,sizeof(b1),1,fb);
     while(!feof(fb))
     { 
@@ -765,6 +797,8 @@ void display_bus_list(FILE *fb)
 
 void delete_bus(FILE *fb)
 {
+    system(" clear ");
+
     bus b;
     int num,flag;
 
@@ -787,6 +821,7 @@ void delete_bus(FILE *fb)
 		fwrite(&b,sizeof(bus),1,f);
 
 	}
+	tot_bus--;
 
 	fclose(fb);
 	fclose(f);
@@ -806,6 +841,8 @@ void delete_bus(FILE *fb)
 
 void update_bus(FILE *fb,int num,int row,int col,seat **s1)
 {
+    system(" clear ");
+
     rewind(fb);
 
     bus b;
@@ -832,6 +869,8 @@ void update_bus(FILE *fb,int num,int row,int col,seat **s1)
 
 void modify_bus(FILE *fb)
 {
+    system(" clear ");
+
     bus b;
     int num,flag,q;
 
@@ -908,6 +947,8 @@ bnum:	printf("Enter the bus no.");
 	    printf("\n");
 	    printf("ENTER bus name :");
 	    fgets(b.bname,30,stdin);
+	    b.bname=tolower(b.bname);
+		b.bname[0]=toupper(b.bname[0]);
 	    printf("\n");
 
 	    for(int i=0;i<13;i++)
@@ -981,6 +1022,7 @@ bnum:	printf("Enter the bus no.");
 		   
 		    b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
 		    b.s[i][j].p1.book_status='#';
+ 		    b.s[i][j].p1.amount=-1;
 		    //b.s[i][j].p1.row=i;
 		    //b.s[i][j].p1.col=j;
 
@@ -992,11 +1034,15 @@ bnum:	printf("Enter the bus no.");
 destination:
 	    printf("Enter the Destination:");
 	    fgets(b.to,20,stdin);
+	   b.to=tolower(b.to);
+		b.to[0]=toupper(b.to[0]);
 	    printf("\n");
 
 
 	    printf("Enter the Source:");
 	    fgets(b.from,20,stdin);
+	    b.from=tolower(b.from);
+		b.from[0]=toupper(b.from[0]);
 	    getchar();
 	    printf("\n");
 
@@ -1186,23 +1232,28 @@ void bill(float p,int n)
 void print_bus_seats(FILE *fb)
 {
   
-    bus b;
-           fread(&b,sizeof(bus),1,fb);
+                   bus b;
+                  fread(&b,sizeof(bus),1,fb);
 
-		  system(" clear");
-
-		  printf(" * - Booked\n");
-		  printf(" # - Unbooked\n");
-
+		  //system(" clear ");
+		  
+		  printf("\t\t\t\t\t\t\t (i,j)->nc\n");
+		  printf("\t\t\t\t\t\t\t c = * --> Booked\n");
+		  printf("\t\t\t\t\t\t\t c = # --> Unbooked\n");
+		  printf("\t\t\t\t\t\t\t n = seat number \n");
+		  printf("\t\t\t\t\t\t\t(i,j)--> ith row, jth column\n");
+		  printf("\t\t\t\t\t\t\t1st column and 4th column are window seats\n");
+		  printf("\t\t\t\t\t\t\t2nd column and 3rd column are aisle seats\n");
+		
 		  for(int i=0;i<13;i++)
 		  {
 		      for(int j=0;j<4;j++)
 		      {  
-			  printf("%d\n",b.s[i][j].p1.seat_no);
+			  printf("(%d,%d)->%d",i,j,b.s[i][j].p1.seat_no);
 			  printf("%c\t",b.s[i][j].p1.book_status);
 		      }
-		      printf("\n");
-		      getchar();
+		      printf("\n\n");
+		      //getchar();
 		  }
 		
 		  getchar();	
@@ -1210,7 +1261,47 @@ void print_bus_seats(FILE *fb)
 }
 
 //****************************************************************************************************************************************************************    
+//***************************************************************************************************************************************************************
+void bus_seating_arrangement(FILE *fb)
+{
+    rewind(fb);
+    int busnum;
+
+    bus b;
+
+    printf("Enter the bus number: ");
+    scanf("%d",&busnum);
+
+    while(fread(&b,sizeof(bus),1,fb)==1)
+    {
+      if(b.bnum==busnum)
+      {
+		  printf("\t\t\t\t\t\t\t (i,j)->nc\n");	
+		  printf("\t\t\t\t\t\t\t c = * --> Booked\n");
+		  printf("\t\t\t\t\t\t\t c = # --> Unbooked\n");
+		  printf("\t\t\t\t\t\t\t n = seat number \n");
+		  printf("\t\t\t\t\t\t\t(i,j)--> ith row, jth column\n");
+		  printf("\t\t\t\t\t\t\t1st column and 4th column are window seats\n");
+		  printf("\t\t\t\t\t\t\t2nd column and 3rd column are aisle seats\n");	
+		  for(int i=0;i<13;i++)
+		  {
+		      for(int j=0;j<4;j++)
+		      {  
+			  printf("(%d,%d)->%d",i,j,b.s[i][j].p1.seat_no);
+			  printf("%c\t",b.s[i][j].p1.book_status);
+		      }
+		      printf("\n\n");
+		      //getchar();
+		  }
+		
+		  getchar();
+      }
+    }
+}
+
+//****************************************************************************************************************************************************************    
 //***************************************************************************************************************************************************************  
+
 
 //TICKET RESERVATION
 
@@ -1267,14 +1358,20 @@ date:
     }	
 
 dest:
-    // getchar();
+     getchar();
     printf("Enter the place of destination:");
-    getchar();
     fgets(des,20,stdin);
+     des=tolower(des);
+	des[0]=toupper(des[0]);
+   
+   // getchar();
     printf("\n");
 
     printf("Enter the Source:");
     fgets(sou,20,stdin);
+    sou=tolower(sou);
+	sou[0]=toupper(sou[0]);
+    
     getchar();
     printf("\n");
 
@@ -1366,7 +1463,9 @@ dest:
 		do
 
 		{
-		    // srand((int)&ra);
+		    
+		     print_bus_seats(fb);
+
 row:		  printf("Enter the row number:");
 		  scanf("%d",&row);
 
@@ -1398,14 +1497,7 @@ column:		  printf("Enter the column number:");
 
 		  b.s[row][col].p1.pid=rand();
 
-		  int le1;
-		  le1=strlen(b.s[row][col].p1.name);
-
-		  (b.s[row][col].p1.pid)=(b.s[row][col].p1.pid)+(b.s[row][col].p1.age)+(b.s[row][col].p1.busn*10000)+le1+(row*100)+col;
-
-		  printf("Your passenger ID is :%lu",b.s[row][col].p1.pid);
-		  printf("\n");
-
+		
 
 		  printf("Enter the name of the passenger:");
 		  getchar();
@@ -1436,7 +1528,17 @@ column:		  printf("Enter the column number:");
 		  (b.s[row][col].p1.dep.Hr)=(b.depart.Hr);
 		  (b.s[row][col].p1.dep.Min)=(b.depart.Min);
 		  (b.s[row][col].p1.book_status)='*';
+ 		   b.s[row][col].p1.amount=price;
 		   b.ticket_left=b.ticket_left-1;
+
+		  int le1;
+		  le1=strlen(b.s[row][col].p1.name);
+
+		  (b.s[row][col].p1.pid)=(b.s[row][col].p1.pid)+(b.s[row][col].p1.age)+(b.s[row][col].p1.busn*10000)+le1+(row*100)+col;
+
+		  printf("Your passenger ID is :%lu",b.s[row][col].p1.pid);
+		  printf("\n");
+
 
 
 
@@ -1499,7 +1601,7 @@ column:		  printf("Enter the column number:");
 		  fseek(fb,-sizeof(bus),1);
 		  fwrite(&b,sizeof(bus),1,fb);
 		  //////////Printing the full bus/////
-		  fseek(fb,-sizeof(bus),1);
+		  //fseek(fb,-sizeof(bus),1);
 
 		 /* fread(&b,sizeof(bus),1,fb);
 
@@ -1520,8 +1622,10 @@ column:		  printf("Enter the column number:");
 		  }
 		
 		  getchar();	*/
+
+		 // printf("After Booking\n");
 		  
-	       	 print_bus_seats(fb);
+	       	// print_bus_seats(fb);
 		  /////////////////////////////////////
 
 		  FILE *pas,*f33;
@@ -1603,19 +1707,22 @@ column:		  printf("Enter the column number:");
 
 	void display_passenger_list(FILE *fb)
 	{
+  	    system(" clear ");
 	    bus b;
+
+	    rewind(fb);
 
 	    while(fread(&b,sizeof(bus),1,fb)==1)
 	    {
 		for(int i=0;i<13;i++)
 		{
-		    for(int j=0;((j<4)&&(b.s[i][j].p1.seat_no!=-1));j++)
+		    for(int j=0;((j<4)&&(b.s[i][j].p1.book_status='*'));j++)
 
 		    {
 
 
 			printf(" DATE OF JOURNEY : %d/%d/%d\n",b.s[i][j].p1.da.dd,b.s[i][j].p1.da.mm,b.s[i][j].p1.da.yyyy);
-			getchar();
+		//	getchar();
 			printf("      NAME        :");
 			puts(b.s[i][j].p1.name);
 			getchar();
@@ -1626,7 +1733,7 @@ column:		  printf("Enter the column number:");
 			printf("      SEX         :%c\n",b.s[i][j].p1.sex);
 			getchar();
 			printf("   BUS NUMBER     :%d\n",b.s[i][j].p1.busn);
-			getchar();
+		//	getchar();
 			printline();
 
 		    }
@@ -1639,14 +1746,16 @@ column:		  printf("Enter the column number:");
 
 	//PRINT TICKET
 
-	void print_ticket()
+	void print_ticket(FILE *fb)
 	{  
+  	    system(" clear ");
+
 	    bus b;
 
 	    long int passid;
 	    int busnum;
-	    FILE *pas;
-	    char s[40]="./Passenger_log/";
+
+	    rewind(fb);
 
 	    printf("Enter the passenger ID :");
 	    scanf("%lu",&passid);
@@ -1655,11 +1764,7 @@ column:		  printf("Enter the column number:");
 	    printf("Enter the bus number:");
 	    scanf("%d",&busnum);
 
-	    strcat(s,itoa(passid));
-
-	    pas=fopen(s,"rb+");
-
-	    while(!feof(pas))
+	   while(fread(&b,sizeof(bus),1,fb)==1)
 	    {
 		if(b.bnum==busnum)
 		{
@@ -1669,29 +1774,29 @@ column:		  printf("Enter the column number:");
 			{
 			    if(b.s[i][j].p1.pid==passid)	
 			    {
-				printf(" _________________________________________________________________________________\n");
-				printf("|				      					    	  |\n");
-				printf("|                                BUS TICKET                                      |\n");
-				printf("|                                                                                |\n");
-				printf("|            DATE    : %d/%d/%d                                                  |\n",b.s[i][j].p1.da.dd,b.s[i][j].p1.da.mm,b.s[i][j].p1.da.yyyy);
-				printf("|                                                                                |\n");
-				printf("|        BUS NUMBER  :  %d                                            		  |\n",b.s[i][j].p1.busn);
-				printf("|                           		                                          |\n");
-				printf("|    PASSENGER NUMBER:  %lu  				                          |\n",b.s[i][j].p1.pid);
-				printf("|                                                                                |\n");
-				printf("|    PASSENGER NAME  :  %s          			    		          |\n",b.s[i][j].p1.name);
-				printf("|           AGE      :  %d                                                       |\n",b.s[i][j].p1.age);
-				printf("|                                                                                |\n");
-				printf("|          SEX       :  %c                                                       |\n",b.s[i][j].p1.sex);
-				printf("|                                                                                |\n");
-				printf("|       ARRIVAL TIME : %d:%d                                                     |\n",b.s[i][j].p1.arr.Hr,b.s[i][j].p1.arr.Min);
-				printf("|     DEPARTURE TIME : %d:%d                                                     |\n",b.s[i][j].p1.dep.Hr,b.s[i][j].p1.dep.Min);
-				printf("|                                                                                |\n");
-				printf("|      SEAT  NUMBER  : %d                                                        |\n",b.s[i][j].p1.seat_no);
-				printf("|                                                       	                  |\n");
-				printf("|           HAVE      A     SAFE       AND     HAPPY        JOURNEY!!            |\n");
-				printf("|                                                                                |\n");
-				printf("|________________________________________________________________________________|\n");
+				printf(" _______________________________________________________________________________________\n");
+				printf("|				      					    	 	|\n");
+				printf("|                                BUS TICKET                                      	|\n");
+				printf("|                                                                                	|\n");
+				printf("|            DATE    : %d/%d/%d                                                  	|\n",b.s[i][j].p1.da.dd,b.s[i][j].p1.da.mm,b.s[i][j].p1.da.yyyy);
+				printf("|                                                                                	|\n");
+				printf("|        BUS NUMBER  :  %d                                            	         	|\n",b.s[i][j].p1.busn);
+				printf("|                           		                                         	|\n");
+				printf("|    PASSENGER NUMBER:  %lu  				                         	|\n",b.s[i][j].p1.pid);
+				printf("|                                                                                	|\n");
+				printf("|    PASSENGER NAME  :  %s          			    		         	|\n",b.s[i][j].p1.name);
+				printf("|           AGE      :  %d                                                       	|\n",b.s[i][j].p1.age);
+				printf("|                                                                                	|\n");
+				printf("|          SEX       :  %c                                                       	|\n",b.s[i][j].p1.sex);
+				printf("|                                                                                	|\n");
+				printf("|       ARRIVAL TIME : %d:%d                                                     	|\n",b.s[i][j].p1.arr.Hr,b.s[i][j].p1.arr.Min);
+				printf("|     DEPARTURE TIME : %d:%d                                                     	|\n",b.s[i][j].p1.dep.Hr,b.s[i][j].p1.dep.Min);
+				printf("|                                                                                	|\n");
+				printf("|      SEAT  NUMBER  : %d                                                        	|\n",b.s[i][j].p1.seat_no);
+				printf("|                                                       	                 	|\n");
+				printf("|           HAVE      A     SAFE       AND     HAPPY        JOURNEY!!            	|\n");
+				printf("|                                                                                	|\n");
+				printf("|_______________________________________________________________________________________|\n");
 				break;
 				printline();
 			    }
@@ -1704,10 +1809,83 @@ column:		  printf("Enter the column number:");
 
 	}
 
+	//****************************************************************************************************************************************************************    
+	//*************************************************************************************************************************************************************** 
+
+//TICKET CANCELLATION	
+	
+	void ticket_cancellation(FILE *fb)
+	{
+  	     system(" clear ");
+
+             bus b;
+   
+  
+	    long int passid;
+	    int busnum;
+	    float price,price1;
+
+	    printf("Enter the passenger ID :");
+	    scanf("%lu",&passid);
+	    printf("\n");
+
+	    printf("Enter the bus number:");
+	    scanf("%d",&busnum);
+
+	    rewind(fb);
+
+	   while(fread(&b,sizeof(bus),1,fb)==1)
+	    {
+		if(b.bnum==busnum)
+		{
+		    for(int i=0;i<13;i++)
+		    {
+			for(int j=0;j<4;j++)
+			{
+			    if(b.s[i][j].p1.pid==passid)	
+			    {
+
+				 b.s[i][j].p1.pid=0;
+		    		 b.s[i][j].p1.da.dd=b.s[i][j].p1.da.mm=b.s[i][j].p1.da.yyyy=-1;
+		    		 strcpy(b.s[i][j].p1.name,"");
+		    		 b.s[i][j].p1.sex='#';
+		    		 b.s[i][j].p1.age=-1;
+		    		 strcpy(b.s[i][j].p1.source,"");
+		    		 strcpy(b.s[i][j].p1.dest,"");
+		    		 b.s[i][j].p1.busn=-1;
+		    		 b.s[i][j].p1.bty='#';
+			         b.s[i][j].p1.arr.Hr=b.s[i][j].p1.arr.Min=b.s[i][j].p1.dep.Hr=b.s[i][j].p1.dep.Min=-1;
+		    		 b.s[i][j].p1.book_status='#';
+				 price=b.s[i][j].p1.amount;
+				 b.s[i][j].p1.amount=-1;
+
+			     }
+			}
+		    }
+		}
+	    }
+ 		b.ticket_left++;
 
 
+	   	  fseek(fb,-sizeof(bus),1);
+		  fwrite(&b,sizeof(bus),1,fb);
+ 
+		 
+		  char s[40]="./Passenger_log/";
 
+		  strcat(s,itoa(passid));
 
+		  remove(s);
+
+		  price1=price;
+
+		  price=(price)/2;
+
+		  printf("Your ticket has been cancelled..\n");
+		  printf("Amount Refunded      : %f\n",price);
+		  printf("Cancellation Charges : %f\n",price);
+
+	}
 
 
 
