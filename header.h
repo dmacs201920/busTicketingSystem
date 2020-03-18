@@ -1,6 +1,17 @@
+/*
+   BUS - TICKETING SYSTEM
+
+   WRITTEN BY:  G.S.K.Ashvanth
+
+     REG.NO  :  173233
+
+     COURSE  : III.B.Sc Mathematics(Hons)
+  
+*/
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
 int tot_bus;  // Total no. of Buses in File
 
@@ -28,14 +39,14 @@ typedef struct passenger     //structure for passenger
     time arr,dep;
     char book_status;
     float amount;
-  //  int row,col;
+    //  int row,col;
 
 }pass;
 
 typedef struct seat
 {
     pass p1;
-   
+
 }seat;
 
 typedef struct bus    //structure for bus
@@ -51,9 +62,9 @@ typedef struct bus    //structure for bus
     float fare;
     int ticket_left;
 
-    
+
 }bus;
-    
+
 // GENERAL FUNCTION PROTOTYPES
 void adLogin(FILE *);
 void pLogin(FILE *);
@@ -81,10 +92,7 @@ int search_date(FILE *,date);
 int search_place(FILE *,char *,char *);
 int check_seat_free(bus,int,int);
 void bill(float,int);
-void print_bus_seats(FILE *);
 void print_ticket(FILE *);
 void bus_seating_arrangement(FILE *);
-
-
 
 
